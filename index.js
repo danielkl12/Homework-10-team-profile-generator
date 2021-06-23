@@ -3,14 +3,17 @@ const fs = require("fs");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const { runInContext } = require("vm");
+//const { runInContext } = require("vm");
+const path = require("path");
 
 const employees = [];
 
-function init() {
+/*function init() {
     writeHtml();
     newTeamMember();
 }
+*/
+function questionaire() {
 
 function newTeamMember() {
    // inquirer.prompt([{
@@ -100,11 +103,21 @@ function position(employees) {
 }
 //async funtion for deploying inquirer 
 async function deploy() {
-    let employees = [];
+
     const maxEmployees = 5;
     for (i=0; i<maxEmployees; i++){
-            const promiseAsyncFunction = new Promise
+            const promiseAsyncFunction = new Promise() => {
+                deploy()
+                .then(function ({name, id, title, email}) {
+                    employees.push();
+
+                }
+                
+                )
+            }
+
     }
+}
 }
 
 //html card
