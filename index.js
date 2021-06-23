@@ -73,6 +73,9 @@ const idArray = [];
     }
 
 
+  
+
+
     function createTeam() {
         inquirer.prompt({
             type: "list",
@@ -81,7 +84,8 @@ const idArray = [];
             choices: [
                 "Engineer",
                 "Manager",
-                "intern"
+                "intern",
+                "complete"
             ]
         
         }).then(positionChoice => {
@@ -96,15 +100,22 @@ const idArray = [];
                    break;
                    case "Intern":
                     addInternPosition();
+                    break;
+                    case "complete":
+                    displayHTML();
+
+
+
     
                     
            }
            
        })
-    }
+    };
 //}
 function displayHTML () {
-    let html = ""
+    htmlArray = [];
+   // let html = ""
     for (i=0; i < employeesArray.length; i++) {
         console.log(employeesArray);
         html += `<div class="card mx-auto mb-3" style="width: 40px;">
@@ -128,6 +139,8 @@ function displayHTML () {
         </div>`
 
     }
+
+    generateHTML();
 
     let generateHTML = `<!DOCTYPE html>
                 
@@ -190,7 +203,7 @@ function displayHTML () {
 
     `;
 
-    fs.writeFile('newhtml.html', html, function(err) {
+    fs.writeFile('./newhtml.html', htmlArray, function(err) {
         if (err) throw err;
     }
     );
