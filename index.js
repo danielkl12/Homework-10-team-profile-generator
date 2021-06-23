@@ -84,7 +84,7 @@ const idArray = [];
             choices: [
                 "Engineer",
                 "Manager",
-                "intern",
+                "Intern",
                 "complete"
             ]
         
@@ -114,11 +114,12 @@ const idArray = [];
     };
 //}
 function displayHTML () {
+
     htmlArray = [];
    // let html = ""
     for (i=0; i < employeesArray.length; i++) {
         console.log(employeesArray);
-        html += `<div class="card mx-auto mb-3" style="width: 40px;">
+        `<div class="card mx-auto mb-3" style="width: 40px;">
         <div class=card-header>
         
             <h3>${employeesArray[i].name}</h3>
@@ -138,11 +139,14 @@ function displayHTML () {
         </ul>  
         </div>`
 
+        
+
     }
 
-    generateHTML();
+    generateHTML() 
 
-    let generateHTML = `<!DOCTYPE html>
+    let generateHTML = 
+    `<!DOCTYPE html>
                 
     <html lang = eng>
     
@@ -208,8 +212,14 @@ function displayHTML () {
     }
     );
 
-
-
+    
 }
+    
+    
+    createTeam();
+    
 
-createTeam();
+
+
+
+
