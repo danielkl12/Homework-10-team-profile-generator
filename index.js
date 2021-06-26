@@ -5,155 +5,198 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 //const { runInContext } = require("vm");
 const path = require("path");
+const { type } = require("os");
 
 const employeesArray = [];
 
-const idArray = [];
+//const idArray = [];
 
 
 
 //function employees() {
-    function addManagerPosition() {
-        console.log("Please pick employee position");
-        inquirer.prompt({
-            type: "input",
-            name: "manager",
-            message: "Please enter team manager's office numbers",
-            validate: answer => {
-                if (answer !== "") {
-                    return true;
-                }
-                return "please make a selection";
-            }
-
-        }).then (answers => {
-            const manager = new Manager(answers.officeNumber)
-            employeesArray.push(manager);
-            createTeam();
-            
-        })
-    }
-    function addEngineerPosition() {
-        console.log("Please pick employee position");
-        inquirer.prompt({
-            type: "input",
-            name: "engineer",
-            message: "Please enter engineer's GitHub User Name",
-            validate: answer => {
-                if (answer !== "") {
-                    return true;
-                }
-                return "please make a selection";
-            }
-        }).then(answers => {
-            const engineer = new Engineer(answers.githubUserName)
-            employeesArray.push(engineer);
-            createTeam();
-        })
-    }
-
-    function addInternPosition() {
-        console.log("Please pick employee position");
-        inquirer.prompt({
-            type: "input",
-            name: "intern",
-            message: "Please enter intern's school",
-            validate: answer => {
-                if (answer !== "") {
-                    return true;
-
-                }
-                return "please make a selection";
-            }
-        }).then(answers => {
-            const intern = new Intern(answers.internSchool)
-            employeesArray.push(intern);
-            createTeam();
-        })
-    }
-
-
-  
-
-
-    function createTeam() {
-        inquirer.prompt({
-            type: "list",
-            name: "position",
-            message: "Please select team member position",
-            choices: [
-                "Engineer",
-                "Manager",
-                "Intern",
-                "complete"
-            ]
+function addManagerPosition() {
+    console.log("Please pick employee position");
+    inquirer.prompt([
+    {
         
-        }).then(positionChoice => {
-            switch(positionChoice.position) {
-                
-               
-                case "Engineer":
-                    addEngineerPosition();
-                    break;
-                   case "Manager":
-                   addManagerPosition();
-                   break;
-                   case "Intern":
-                    addInternPosition();
-                    break;
-                    case "complete":
-                    displayHTML();
+    type: "input",
+    name: "officeNumber",
+    message: "Please enter team manager's office numbers",
+        
+    },
+    
+    {
+    type: "input",
+    message:"what is your team manager's name?",
+    name: "name"
+    },
+    {
+    type: "input",
+    message: "What is your team manager's email address?",
+    name: "email"
 
+
+    },
+    {
+    type:"input",
+    message:"What is your team manager's ID?",
+    name: "id"
+
+    }
+    
+])
+    .then(answers => {
+        const manager = new Manager(answers.officeNumber)
+        employeesArray.push(manager);
+        createTeam();
+
+    });
+
+}; 
+
+function addEngineerPosition() {
+    console.log("Please pick employee position");
+    inquirer.prompt([
+
+        {
+        type: "input",
+        name: "githubUserName",
+        message: "Please enter engineer's GitHub User Name",
+       
+        },
+    
+        {
+        
+            type: "input",
+            name: "name",
+            message:"Please enter your engineer's name"
+
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "please enter your engineer's id"
+
+
+        },
+        {
+            type: "input",
+            name:"email",
+            message: "please enter your engineer's email address"
+        }
+
+    ])
 
 
     
-                    
-           }
-           
-       })
-    };
+    
+
+
+    .then(answers => {
+        const engineer = new Engineer(answers.githubUserName)
+        employeesArray.push(engineer);
+        createTeam();
+    });
+
+};
+
+
+function addInternPosition() {
+    console.log("Please pick employee position");
+    inquirer.prompt([
+
+        {
+        type: "input",
+        name: "internSchool",
+        message: "Please enter intern's school",
+        },
+        {
+
+        type: "input",
+        name:"name",
+        message:"please enter your intern's name"
+
+
+        },
+        {
+            type:"input",
+            name: "id",
+            message:"Please enter your intern's id"
+
+        },
+        {
+            type:"input",
+            name:"email",
+            message:"please enter your intern's email address"
+        }
+
+    ])
+    
+    
+    .then(answers => {
+        const intern = new Intern(answers.internSchool)
+        employeesArray.push(intern);
+        createTeam();
+    });
+};
+
+
+
+
+
+function createTeam() {
+    inquirer.prompt({
+        type: "list",
+        name: "position",
+        message: "Please select team member position",
+        choices: [
+            "Engineer",
+            "Manager",
+            "Intern",
+            "complete"
+        ]
+
+    }).then(positionChoice => {
+        switch (positionChoice.position) {
+
+
+            case "Engineer":
+                addEngineerPosition();
+                break;
+            case "Manager":
+                addManagerPosition();
+                break;
+            case "Intern":
+                addInternPosition();
+                break;
+            case "complete":
+                displayHTML();
+
+
+
+
+
+        }
+
+    })
+};
 //}
-function displayHTML () {
 
-    htmlArray = [];
-   // let html = ""
-    for (i=0; i < employeesArray.length; i++) {
-        console.log(employeesArray);
-        `<div class="card mx-auto mb-3" style="width: 40px;">
-        <div class=card-header>
-        
-            <h3>${employeesArray[i].name}</h3>
+function generateHTML(html) {
+    let htmlStructure;
+    for (i = 0; i < employeesArray.length; i++) {
+         htmlStructure =
 
-        </div>
+            `<!DOCTYPE html>
+  
 
-        <div class=card-header>
-
-            <h4>${employeesArray[i].title}</h4>
-
-        
-
-        <ul class="list>
-            <li class=list-1>: ${employeesArray[i].id}</li>
-            <li class=list-1>: ${employeesArray[i].title}</li>
-            <li class=list-1>: ${employeesArray[i].email}</li>
-        </ul>  
-        </div>`
-
-        
-
-    }
-
-    generateHTML() 
-
-    let generateHTML = 
-    `<!DOCTYPE html>
                 
     <html lang = eng>
     
     <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"
-    <meta http-equiv="X-UA-Compatible" content=ie=edge"
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible content=ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
 
 
@@ -178,11 +221,7 @@ function displayHTML () {
             text-align: center;
         }
 
-        .cardrow {
-            display: flex;
-            flexwrap: wrap;
-            justify-content: center;
-        }
+       
     
     
     
@@ -196,7 +235,7 @@ function displayHTML () {
             </nav>
     
         <div class=cardrow>
-                
+             ${html.join()}   
         </div>
 
 
@@ -206,18 +245,56 @@ function displayHTML () {
     </html>
 
     `;
+    }
 
-    fs.writeFile('./newhtml.html', htmlArray, function(err) {
+    fs.writeFile('./newhtml.html', htmlStructure, function (err) {
         if (err) throw err;
     }
     );
 
-    
+
 }
-    
-    
-    createTeam();
-    
+function displayHTML() {
+
+    htmlArray = [];
+    // let html = ""
+    for (i = 0; i < employeesArray.length; i++) {
+        console.log(employeesArray);
+        htmlArray[i] = `<div class="card mx-auto mb-3" style="width: 500px;">
+        <div class=card-header>
+        
+            <h3>${employeesArray[i].name}</h3>
+
+        </div>
+
+        <div class=card-header>
+
+            <h4>${employeesArray[i].title}</h4>
+
+        
+
+        <ul class=list>
+            <li class=list-1>${employeesArray[i].id}</li>
+            <li class=list-1>${employeesArray[i].email}</li>
+        </ul>  
+        </div>`
+
+        generateHTML(htmlArray);
+
+    }
+
+
+
+
+
+}
+
+
+
+
+
+createTeam();
+
 
 
 
